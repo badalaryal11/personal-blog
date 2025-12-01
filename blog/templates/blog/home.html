@@ -1,0 +1,108 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Hi, I'm <span class="highlight">Badal Aryal</span></h1>
+        <p class="subtitle">Software Engineer | iOS Developer | Tech Enthusiast</p>
+        <a href="#portfolio" class="btn btn-primary">View My Work</a>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I am a Computer Engineer based in Nepal, currently working at <strong>cloudtech</strong>. I
+                    specialize in building robust applications using Python (Django/Flask) and Swift for iOS. I am
+                    passionate about solving real-world problems through code, from ERP systems to mobile gaming
+                    platforms.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills" class="section">
+    <div class="container">
+        <h2 class="section-title">My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card"><i class="fab fa-python"></i>
+                <h3>Python</h3>
+            </div>
+            <div class="skill-card"><i class="fab fa-swift"></i>
+                <h3>Swift</h3>
+            </div>
+            <div class="skill-card"><i class="fab fa-js"></i>
+                <h3>JavaScript</h3>
+            </div>
+            <div class="skill-card"><i class="fas fa-mobile-alt"></i>
+                <h3>Flutter/Dart</h3>
+            </div>
+            <div class="skill-card"><i class="fas fa-server"></i>
+                <h3>Django</h3>
+            </div>
+            <div class="skill-card"><i class="fas fa-database"></i>
+                <h3>SQL</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="portfolio" class="section">
+    <div class="container">
+        <h2 class="section-title">Portfolio</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                {% if project.image_url %}
+                <img src="{{ project.image_url }}" alt="{{ project.title }}">
+                {% else %}
+                <div class="project-placeholder"></div>
+                {% endif %}
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <span class="tech-stack">{{ project.tech_stack }}</span>
+                    <a href="{{ project.link }}" target="_blank" class="btn btn-small">View Project</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No projects added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="blog" class="section">
+    <div class="container">
+        <h2 class="section-title">Latest Posts</h2>
+        <div class="blog-grid">
+            {% for post in posts %}
+            <div class="blog-card">
+                <div class="blog-content">
+                    <h3>{{ post.title }}</h3>
+                    <p class="date">{{ post.date_posted|date:"F d, Y" }}</p>
+                    <p>{{ post.content|striptags|truncatewords:20 }}</p>
+                    <a href="{% url 'blog_detail' post.pk %}" class="read-more">Read More</a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No blog posts yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
+            <textarea placeholder="Message" required></textarea>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
