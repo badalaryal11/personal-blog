@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ocjbpt+6cxpze(2g4ynylgdj2&dd!%6$*pca_mtr-$tnk!vm)r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
