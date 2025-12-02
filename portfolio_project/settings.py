@@ -19,13 +19,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+import os
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ocjbpt+6cxpze(2g4ynylgdj2&dd!%6$*pca_mtr-$tnk!vm)r'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-ocjbpt+6cxpze(2g4ynylgdj2&dd!%6$*pca_mtr-$tnk!vm)r')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost']
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 
 # Application definition
