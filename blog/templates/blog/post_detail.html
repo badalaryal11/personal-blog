@@ -9,9 +9,15 @@
         <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image">
         {% endif %}
         <div class="post-content">
-            {{ post.content|safe }}
+            <p>{{ post.content|safe }}</p>
+            {% if post.canonical_url %}
+            <div class="medium-link">
+                <a href="{{ post.canonical_url }}" target="_blank" class="btn btn-outline">Read full article on
+                    Medium</a>
+            </div>
+            {% endif %}
         </div>
-        <a href="{% url 'home' %}#blog" class="btn btn-secondary">Back to Blog</a>
+        <a href="{% url 'home' %}" class="back-link">Back to Home</a>
     </div>
 </section>
 {% endblock %}

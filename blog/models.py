@@ -17,6 +17,7 @@ class BlogPost(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     image_url = models.URLField(blank=True, null=True)
+    canonical_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
