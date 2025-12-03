@@ -29,6 +29,8 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = ['https://badal-aryal.com.np', 'https://www.badal-aryal.com.np']
+
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
