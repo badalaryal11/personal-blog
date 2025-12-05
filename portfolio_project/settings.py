@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-ocjbpt+6cxpze(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost', '.vercel.app']
 
 CSRF_TRUSTED_ORIGINS = ['https://badal-aryal.com.np', 'https://www.badal-aryal.com.np']
 
@@ -38,6 +38,7 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
@@ -130,7 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles_build'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
