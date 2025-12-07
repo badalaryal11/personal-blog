@@ -396,12 +396,12 @@ footer {
 }
 
 #subscription-form input[type="email"] {
-    padding: 0.8rem 1.2rem;
+    padding: 1rem 1.5rem;
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-color);
-    font-size: 1rem;
+    font-size: 1.1rem;
     flex: 1;
     outline: none;
     transition: border-color 0.3s;
@@ -412,13 +412,14 @@ footer {
 }
 
 #subscription-form button {
-    padding: 0.8rem 1.5rem;
+    padding: 1rem 2rem;
     border-radius: 50px;
     border: none;
     background: var(--primary-color);
     color: white;
     font-weight: 600;
     cursor: pointer;
+    font-size: 1.1rem;
     transition: transform 0.2s;
 }
 
