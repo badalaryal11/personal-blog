@@ -84,8 +84,9 @@
                     <h3>{{ post.title }}</h3>
                     <p class="date">{{ post.date_posted|date:"F d, Y" }}</p>
                     <p>{{ post.content|striptags|truncatewords:40 }}</p>
-                    <a href="{% if post.canonical_url %}{{ post.canonical_url }}{% else %}{% url 'blog_detail' post.pk %}{% endif %}"
-                        class="read-more" {% if post.canonical_url %}target="_blank" {% endif %}>Read More</a>
+                    {% if post.canonical_url %}
+                    <a href="{{ post.canonical_url }}" class="read-more" target="_blank">Read More</a>
+                    {% endif %}
                 </div>
             </div>
             {% empty %}
