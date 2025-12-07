@@ -21,3 +21,10 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    date_subscribed = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

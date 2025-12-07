@@ -47,6 +47,17 @@
     </main>
 
     <footer>
+        <div class="footer-content">
+            <div class="subscription-section">
+                <h3>Subscribe to my Newsletter</h3>
+                <form id="subscription-form" method="POST" action="{% url 'subscribe' %}">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-small">Subscribe</button>
+                </form>
+                <p id="subscription-message"></p>
+            </div>
+        </div>
         <p>&copy; {% now "Y" %} Badal Aryal. All rights reserved.</p>
         <div class="social-links">
             <a href="https://github.com/badalaryal11" target="_blank"><i class="fab fa-github"></i></a>

@@ -34,3 +34,32 @@ def home(request):
 def blog_detail(request, pk):
     post = get_object_or_404(BlogPost, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
+
+from .forms import SubscriptionForm
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
+
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            subscriber = form.save()
+            
+            # Send confirmation email
+            try:
+                send_mail(
+                    subject='Welcome to my Newsletter!',
+                    message='Thank you for subscribing to my newsletter. I will keep you updated with my latest blog posts and projects.',
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[subscriber.email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                # Log error but don't fail the response
+                print(f"Error sending email: {e}")
+
+            return JsonResponse({'success': True, 'message': 'Thank you for subscribing!'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid email or already subscribed.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
