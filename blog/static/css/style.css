@@ -436,3 +436,20 @@ footer {
     font-size: 0.9rem;
     height: 20px;
 }
+
+@media screen and (max-width: 768px) {
+    #subscription-form {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    #subscription-form input[type="email"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #subscription-form button {
+        width: 100%;
+        margin: 0;
+    }
+}
