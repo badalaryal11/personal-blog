@@ -28,3 +28,12 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
+
+class PageVisit(models.Model):
+    path = models.CharField(max_length=1024)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.path} - {self.timestamp}"
