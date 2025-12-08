@@ -74,4 +74,6 @@ const app = () => {
     handleSubscription();
 }
 
-app();
+document.addEventListener('DOMContentLoaded', () => {
+    app();
+});
