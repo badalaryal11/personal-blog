@@ -59,7 +59,19 @@ def subscribe(request):
                 # Log error but don't fail the response
                 print(f"Error sending email: {e}")
 
-            return JsonResponse({'success': True, 'message': 'Thank you for subscribing!'})
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True, 'message': 'Thank you for subscribing!'})
+            else:
+                messages.success(request, 'Thank you for subscribing!', extra_tags='subscription')
+                return redirect('/#newsletter')
         else:
-            return JsonResponse({'success': False, 'message': 'Invalid email or already subscribed.'})
-    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': 'Invalid email or already subscribed.'})
+            else:
+                messages.error(request, 'Invalid email or already subscribed.', extra_tags='subscription')
+                return redirect('/#newsletter')
+    
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+    else:
+        return redirect('/')

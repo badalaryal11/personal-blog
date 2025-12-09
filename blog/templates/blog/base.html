@@ -48,14 +48,22 @@
 
     <footer>
         <div class="footer-content">
-            <div class="subscription-section">
+            <div class="subscription-section" id="newsletter">
                 <h3>Subscribe to my Newsletter</h3>
                 <form id="subscription-form" method="POST" action="{% url 'subscribe' %}">
                     {% csrf_token %}
                     <input type="email" name="email" placeholder="Enter your email" required>
                     <button type="submit" class="btn btn-small">Subscribe</button>
                 </form>
-                <p id="subscription-message"></p>
+                <div id="subscription-message">
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if 'subscription' in message.tags %}
+                    <p style="color: {% if 'success' in message.tags %}green{% else %}red{% endif %};">{{ message }}</p>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
         <p>&copy; {% now "Y" %} Badal Aryal. All rights reserved.</p>
@@ -66,7 +74,7 @@
         </div>
     </footer>
 
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}?v=1"></script>
 </body>
 
 </html>
