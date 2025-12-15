@@ -5,3 +5,4 @@ packaging==25.0
 sqlparse==0.5.4
 typing_extensions==4.15.0
 whitenoise==6.11.0
+django-allow-cidr
