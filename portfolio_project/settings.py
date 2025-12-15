@@ -27,9 +27,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-ocjbpt+6cxpze(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['badal-aryal.com.np', 'www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost', '.vercel.app']
+ALLOWED_HOSTS = ['www.badal-aryal.com.np', 'badalaryal11.pythonanywhere.com', '127.0.0.1', 'localhost', '.vercel.app']
 
-CSRF_TRUSTED_ORIGINS = ['https://badal-aryal.com.np', 'https://www.badal-aryal.com.np']
+CSRF_TRUSTED_ORIGINS = ['https://www.badal-aryal.com.np']
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
