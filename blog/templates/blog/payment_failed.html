@@ -1,0 +1,17 @@
+{% extends "blog/home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container"
+    style="max-width: 600px; margin: 50px auto; text-align: center; padding: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div style="font-size: 50px; color: #dc3545; margin-bottom: 20px;">❌</div>
+    <h2>Payment Failed</h2>
+    <p>Something went wrong with the transaction. You have not been charged.</p>
+
+    <a href="{% url 'buy_coffee' %}"
+        style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: #60bb46; color: white; text-decoration: none; border-radius: 5px;">Try
+        Again</a>
+    <br><br>
+    <a href="/" style="color: #666; text-decoration: none;">Back to Home</a>
+</div>
+{% endblock %}

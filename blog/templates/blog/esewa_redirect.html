@@ -1,0 +1,48 @@
+{% extends "blog/home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="text-align: center; padding: 50px;">
+    <h3>Redirecting to Esewa...</h3>
+    <p>Please wait while we transfer you to the secure payment gateway.</p>
+
+    <div class="loader"
+        style="margin: 20px auto; border: 5px solid #f3f3f3; border-top: 5px solid #60bb46; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;">
+    </div>
+
+    <form id="esewaForm" action="{{ esewa_url }}" method="POST">
+        <input type="hidden" name="amount" value="{{ amount }}">
+        <input type="hidden" name="tax_amount" value="{{ tax_amount }}">
+        <input type="hidden" name="total_amount" value="{{ total_amount }}">
+        <input type="hidden" name="transaction_uuid" value="{{ transaction_uuid }}">
+        <input type="hidden" name="product_code" value="{{ product_code }}">
+        <input type="hidden" name="product_service_charge" value="{{ product_service_charge }}">
+        <input type="hidden" name="product_delivery_charge" value="{{ product_delivery_charge }}">
+        <input type="hidden" name="success_url" value="{{ success_url }}">
+        <input type="hidden" name="failure_url" value="{{ failure_url }}">
+        <input type="hidden" name="signed_field_names" value="{{ signed_field_names }}">
+        <input type="hidden" name="signature" value="{{ signature }}">
+        <noscript>
+            <button type="submit">Click here if not redirected automatically</button>
+        </noscript>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('esewaForm').submit();
+    });
+</script>
+
+<style>
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock %}

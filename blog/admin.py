@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, BlogPost, Subscriber, PageVisit
+from .models import Project, BlogPost, Subscriber, PageVisit, Donation
 
 admin.site.site_header = "Portfolio Administration"
 admin.site.site_title = "Portfolio Admin Portal"
@@ -92,3 +92,9 @@ class PageVisitAdmin(admin.ModelAdmin):
     list_display = ('path', 'timestamp', 'ip_address')
     list_filter = ('timestamp',)
     search_fields = ('path', 'ip_address')
+
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'amount', 'status', 'created_at', 'esewa_ref_id')
+    list_filter = ('status', 'created_at')
+    search_fields = ('name', 'transaction_id', 'esewa_ref_id')
