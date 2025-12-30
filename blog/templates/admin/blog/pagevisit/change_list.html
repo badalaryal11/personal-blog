@@ -9,7 +9,7 @@
         <label for="month-select">Choose Month:</label>
         <select name="month" id="month-select" onchange="this.form.submit()">
             {% for m in months_choices %}
-            <option value="{{ m.value }}" {% if m.value==selected_month %}selected{% endif %}>
+            <option value="{{ m.value }}" {% if m.value == selected_month %}selected{% endif %}>
                 {{ m.label }}
             </option>
             {% endfor %}
