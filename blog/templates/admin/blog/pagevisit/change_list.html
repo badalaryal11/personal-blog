@@ -1,0 +1,80 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+    <h2>Page Views by Day</h2>
+
+    <form method="get" style="margin-bottom: 20px;">
+        <label for="month-select">Choose Month:</label>
+        <select name="month" id="month-select" onchange="this.form.submit()">
+            {% for m in months_choices %}
+            <option value="{{ m.value }}" {% if m.value==selected_month %}selected{% endif %}>
+                {{ m.label }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <div style="width: 100%; max-width: 1000px; height: 400px;">
+        <canvas id="pageViewsChart"></canvas>
+    </div>
+</div>
+
+<!-- Render the rest of the change list -->
+{{ block.super }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const chartData = JSON.parse('{{ chart_data|escapejs }}');
+
+        const ctx = document.getElementById('pageViewsChart').getContext('2d');
+
+        const labels = chartData.map(d => {
+            const date = new Date(d.date);
+            return date.toLocaleDateString();
+        });
+
+        const data = chartData.map(d => d.y);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Page Views',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Views'
+                        },
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
