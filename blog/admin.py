@@ -29,61 +29,64 @@ class PageVisitAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         from django.db.models import Count
-        from django.db.models.functions import TruncDay
-        import json
-        import datetime
+        from django.db.models.functions import TruncDay, TruncMonth
         from django.utils import timezone
+        import datetime
+        import json
 
         # Aggregate PageViews by day
-        chart_data = (
-            PageVisit.objects.annotate(date=TruncDay('timestamp'))
-            .values('date')
-            .annotate(y=Count('id'))
-            .order_by('date')
-        )
+        try:
+            chart_data_qs = (
+                PageVisit.objects.annotate(date=TruncDay('timestamp'))
+                .values('date')
+                .annotate(y=Count('id'))
+                .order_by('date')
+            )
 
-        # Get all available months for the dropdown
-        # This is a bit expensive if lots of data, sticking to simple approach for now or optimizing with TruncMonth
-        from django.db.models.functions import TruncMonth
-        available_months = (
-            PageVisit.objects.annotate(month=TruncMonth('timestamp'))
-            .values('month')
-            .annotate(c=Count('id'))
-            .order_by('-month')
-        )
+            # Get all available months for the dropdown
+            available_months_qs = (
+                PageVisit.objects.annotate(month=TruncMonth('timestamp'))
+                .values('month')
+                .annotate(c=Count('id'))
+                .order_by('-month')
+            )
 
-        # Filter logic
-        selected_month_str = request.GET.get('month')
-        
-        if selected_month_str:
-             try:
-                selected_month = datetime.datetime.strptime(selected_month_str, '%Y-%m').date()
-             except ValueError:
-                selected_month = None
-        else:
-             # Default to current month if valid or latest available
-            now = timezone.now()
-            selected_month = datetime.date(now.year, now.month, 1)
+            # Filter logic
+            selected_month_str = request.GET.get('month')
+            
+            if selected_month_str:
+                try:
+                    selected_month = datetime.datetime.strptime(selected_month_str, '%Y-%m').date()
+                except ValueError:
+                    selected_month = None
+            else:
+                # Default to current month if valid or latest available
+                now = timezone.now()
+                selected_month = datetime.date(now.year, now.month, 1)
 
+            if selected_month and chart_data_qs.exists():
+                chart_data_qs = chart_data_qs.filter(timestamp__year=selected_month.year, timestamp__month=selected_month.month)
 
-        if selected_month:
-             chart_data = chart_data.filter(timestamp__year=selected_month.year, timestamp__month=selected_month.month)
+            chart_data = list(chart_data_qs)
+            as_json = json.dumps(chart_data, default=str)
+            
+            # Prepare available months list for template
+            months_choices = []
+            for m in available_months_qs:
+                m_date = m['month']
+                if m_date:
+                    value = m_date.strftime('%Y-%m')
+                    label = m_date.strftime('%B %Y')
+                    months_choices.append({'value': value, 'label': label})
 
-        as_json = json.dumps(list(chart_data), default=str)
-        
+        except Exception as e:
+            print(f"Error in PageVisitAdmin: {e}")
+            as_json = '[]'
+            months_choices = []
+            selected_month = None
+
         extra_context = extra_context or {}
         extra_context['chart_data'] = as_json
-        
-        # Prepare available months list for template
-        # Format: "2023-10" (value), "October 2023" (display)
-        months_choices = []
-        for m in available_months:
-            m_date = m['month']
-            if m_date:
-                value = m_date.strftime('%Y-%m')
-                label = m_date.strftime('%B %Y')
-                months_choices.append({'value': value, 'label': label})
-
         extra_context['months_choices'] = months_choices
         extra_context['selected_month'] = selected_month.strftime('%Y-%m') if selected_month else ''
 
@@ -96,5 +99,5 @@ class PageVisitAdmin(admin.ModelAdmin):
 @admin.register(Donation)
 class DonationAdmin(admin.ModelAdmin):
     list_display = ('name', 'amount', 'status', 'created_at', 'esewa_ref_id')
-    list_filter = ('status', 'created_at')
+    list_filter = ('timestamp', 'status') if hasattr(Donation, 'timestamp') else ('created_at', 'status')
     search_fields = ('name', 'transaction_id', 'esewa_ref_id')
