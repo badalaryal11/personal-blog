@@ -8,6 +8,17 @@
     <p style="text-align: center; color: #666; margin-bottom: 30px;">Support my work by making a donation.
         Contributions are processed securely via Esewa.</p>
 
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="{% static 'blog/images/esewa_qr.jpg' %}" alt="Esewa QR Code"
+            style="max-width: 200px; width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <p style="margin-top: 10px; font-weight: bold; color: #60bb46;">Scan to Pay with Esewa</p>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px;">
+        <span
+            style="background: #f0f0f0; padding: 5px 10px; border-radius: 20px; font-size: 14px; color: #666;">OR</span>
+    </div>
+
     <form action="{% url 'initiate_payment' %}" method="post">
         {% csrf_token %}
         <div class="form-group" style="margin-bottom: 15px;">
