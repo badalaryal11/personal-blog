@@ -45,13 +45,13 @@ class Command(BaseCommand):
                 if created:
                     self.stdout.write(self.style.SUCCESS(f"Imported: {name}"))
                 else:
-                    # Optional: Update existing records if you want to sync changes
-                    # obj.description = description
-                    # obj.link = html_url
-                    # obj.tech_stack = language
-                    # obj.image_url = self.get_image_for_language(language)
-                    # obj.save()
-                    self.stdout.write(f"Skipped (exists): {name}")
+                    # Update existing records
+                    obj.description = description
+                    obj.link = html_url
+                    obj.tech_stack = language
+                    obj.image_url = self.get_image_for_language(language)
+                    obj.save()
+                    self.stdout.write(f"Updated: {name}")
                     
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Error: {e}"))
