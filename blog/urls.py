@@ -9,4 +9,5 @@ urlpatterns = [
     path('buy-coffee/initiate/', views.initiate_payment, name='initiate_payment'),
     path('buy-coffee/verify/', views.verify_payment, name='verify_payment'),
     path('buy-coffee/fail/', views.payment_failed, name='payment_failed'),
+    path('update-projects/', views.update_projects_webhook, name='update_projects_webhook'),
 ]

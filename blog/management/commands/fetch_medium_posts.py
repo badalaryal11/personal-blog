@@ -63,13 +63,13 @@ class Command(BaseCommand):
                 if created:
                     self.stdout.write(self.style.SUCCESS(f"Imported: {title}"))
                 else:
-                    # Update canonical_url if missing
-                    if not obj.canonical_url:
-                        obj.canonical_url = link
-                        obj.save()
-                        self.stdout.write(f"Updated (link): {title}")
-                    else:
-                        self.stdout.write(f"Skipped (exists): {title}")
+                    # Update existing records
+                    obj.content = content
+                    obj.date_posted = pub_date
+                    obj.image_url = image_url
+                    obj.canonical_url = link
+                    obj.save()
+                    self.stdout.write(f"Updated: {title}")
                         
         except Exception as e:
             self.stdout.write(self.style.ERROR(f"Error: {e}"))

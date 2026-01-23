@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.management import call_command
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
@@ -196,3 +197,18 @@ def verify_payment(request):
 
 def payment_failed(request):
     return render(request, 'blog/payment_failed.html')
+
+def update_projects_webhook(request):
+    secret_key = request.GET.get('secret')
+    # Default to a dev key if not in settings, but user should set this!
+    expected_key = getattr(settings, 'UPDATE_SECRET_KEY', 'default_dev_secret_key')
+    
+    if secret_key == expected_key:
+        try:
+            call_command('fetch_github_repos')
+            call_command('fetch_medium_posts')
+            return JsonResponse({'success': True, 'message': 'Projects and Blog Posts updated successfully.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid secret key.'}, status=403)

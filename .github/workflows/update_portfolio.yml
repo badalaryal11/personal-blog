@@ -1,0 +1,21 @@
+name: Update Portfolio
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
+  workflow_dispatch:      # Allows manual triggering
+
+jobs:
+  update-portfolio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Update Webhook
+        env:
+          UPDATE_SECRET: ${{ secrets.UPDATE_SECRET }}
+        # Replace 'your-domain.com' with the actual domain in production
+        # Assuming the user will configure this or I can use the existing domain if known.
+        # From settings.py: 'www.badal-aryal.com.np', 'badal-aryal.com.np', 'badalaryal11.pythonanywhere.com'
+        # I'll use badalaryal11.pythonanywhere.com as a likely candidate or badal-aryal.com.np
+        # Let's use specific logic to try multiple or just one. I'll pick badal-aryal.com.np as primary.
+        run: |
+          curl -X GET "https://www.badal-aryal.com.np/update-projects/?secret=${{ secrets.UPDATE_SECRET }}"
