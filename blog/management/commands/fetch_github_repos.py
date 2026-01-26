@@ -1,5 +1,6 @@
 import urllib.request
 import json
+from django.utils.dateparse import parse_datetime
 from django.core.management.base import BaseCommand
 from blog.models import Project
 
@@ -31,6 +32,9 @@ class Command(BaseCommand):
                 html_url = repo.get('html_url')
                 language = repo.get('language') or "Code"
                 
+                created_at_str = repo.get('created_at')
+                date_created = parse_datetime(created_at_str)
+
                 # Create or Update
                 obj, created = Project.objects.get_or_create(
                     title=name,
@@ -38,7 +42,8 @@ class Command(BaseCommand):
                         'description': description,
                         'link': html_url,
                         'tech_stack': language,
-                        'image_url': self.get_image_for_language(language)
+                        'image_url': self.get_image_for_language(language),
+                        'date_created': date_created
                     }
                 )
                 
@@ -50,6 +55,8 @@ class Command(BaseCommand):
                     obj.link = html_url
                     obj.tech_stack = language
                     obj.image_url = self.get_image_for_language(language)
+                    if date_created:
+                        obj.date_created = date_created
                     obj.save()
                     self.stdout.write(f"Updated: {name}")
                     

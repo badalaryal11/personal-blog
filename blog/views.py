@@ -28,7 +28,7 @@ def home(request):
             
         return redirect('home')
 
-    projects = Project.objects.all().order_by('-created_at')
+    projects = Project.objects.all().order_by('-date_created', '-created_at')
     posts = BlogPost.objects.all().order_by('-date_posted')
     return render(request, 'blog/home.html', {'projects': projects, 'posts': posts})
 

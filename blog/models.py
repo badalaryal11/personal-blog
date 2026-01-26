@@ -8,6 +8,7 @@ class Project(models.Model):
     link = models.URLField(blank=True)
     tech_stack = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title
