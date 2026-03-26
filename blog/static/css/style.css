@@ -439,23 +439,23 @@ footer {
 
 @media screen and (max-width: 768px) {
     #subscription-form {
-        flex-direction: column;
-        background: transparent;
-        box-shadow: none;
-        padding: 0;
+        flex-direction: column !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
     }
 
     #subscription-form input[type="email"] {
-        width: 100%;
-        margin-bottom: 10px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        background: white !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
     }
 
     #subscription-form button {
-        width: 100%;
-        margin: 0;
-        padding: 1rem;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 1rem !important;
     }
 }
