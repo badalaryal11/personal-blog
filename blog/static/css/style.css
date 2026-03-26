@@ -440,16 +440,22 @@ footer {
 @media screen and (max-width: 768px) {
     #subscription-form {
         flex-direction: column;
-        padding: 10px;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
     }
 
     #subscription-form input[type="email"] {
         width: 100%;
         margin-bottom: 10px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     #subscription-form button {
         width: 100%;
         margin: 0;
+        padding: 1rem;
     }
 }
